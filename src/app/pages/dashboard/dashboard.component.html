@@ -1,0 +1,269 @@
+<div class="pc-container">
+  <div class="pcoded-content pb" style="padding-bottom:90px;">
+    <div class="welcome-user"><h2 >Welcome User</h2></div>
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Dashboard </h5>
+            </div>
+          </div>
+          <!-- <div class="col-md-6"><ul class="list-unstyled  ml-auto list-unstyled d-flex flex-row justify-content-end mb-0"><li ><button type="button" class="btn  green-color text-white"><i class="fa fa-video-camera mr-2" aria-hidden="true"></i>Video Confrence</button></li><li class="ml-3"><button type="button" class="btn  btn-danger"><i class="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout</button></li></ul></div> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 mb-1 fir-det-sec">
+<div class="row">
+  <div class="col-sm-4">
+    <a href="javascript:void(0)"  class="card text-center p-4 com-red-clr">
+      <h4>Total FIR Cases</h4>
+      <span>100</span>
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <a href="javascript:void(0)" class="card text-center p-4 com-blu-clr">
+      <h4>Heinous Cases</h4>
+      <span>90</span>
+    </a>
+  
+  </div>
+<div class="col-sm-4">
+  <a href="javascript:void(0)"class="card text-center p-4 com-grn-clr">
+    <h4>Other Cases</h4>
+    <span>10</span>
+  </a>
+
+</div>
+
+</div>
+
+      </div>
+      <!--<div class="col-sm-12 mb-1 fir-det-sec">
+<div class="row">
+  <div class="col-sm-4">
+    <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr" (click)="GetTotalCount($event)" data-type="TotalCount">
+      <h4>Total  Pending FIR</h4>
+        <span  id="TotalCount" > 0 </span>
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <a href="javascript:void(0)" class="card text-center p-4 com-blu-clr" (click)="GetTotalCount($event)" data-type="HeinousNo">
+      <h4>Heinous No</h4>
+       <span id="HeinousNo"> 0</span>
+    </a>
+  
+  </div>
+<div class="col-sm-4">
+  <a href="javascript:void(0)"class="card text-center p-4 com-grn-clr" data-type="HeinousYes">
+    <h4>Heinous Yes</h4>
+    <span id="HeinousYes">0</span>
+  </a>
+
+</div>
+
+</div>
+
+<div class="row" *ngIf="isTotaldetails">
+  <div class="col-sm-4">
+    <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr"  data-type="TotalCount">
+      <h4> {{lablename}}</h4>
+        <span> {{Cnt}} </span>
+    </a>
+  </div>
+</div>
+
+
+      </div>-->
+      <div class="col-sm-12 topics mb-1">
+        <div class="card">
+          <div class="card-header p-0" style="text-align: center;">
+            <h4>Crime Recording Process</h4>
+          </div>
+          <div class="col-sm-12 topics mb-4 pt-4 px-3">
+            <div class="row row-cols-1 row-cols-lg-4 row-cols-sm-2 g-4">
+              <a href="javascript:void(0)" class="col" (click)="onEsakshyaClick()">
+                <div class="card h-100 d-flex ">
+                  <div class="card-body text-center">
+                    <span class="topics-icon crime-detail"></span>
+                    <h5 class="card-title mb-0"> eSakshya </h5>
+                  </div>
+                </div>
+              </a>
+              <a href="javascript:void(0)" routerLink="/Medleapr" class="col">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                    <span class="topics-icon medlpr"></span>
+                    <h5 class="card-title mb-0">Medleapr</h5>
+                  </div>
+                </div>
+              </a>
+              <a href="javascript:void(0)" routerLink="/fsl-reports" class="col">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                    <span class="topics-icon forensic"></span>
+                    <h5 class="card-title mb-0">Forensic</h5>
+                  </div>
+                </div>
+              </a>
+              <!-- Nyaay Shuruti Card -->
+              <a href="javascript:void(0)" class="col" (click)="onNyaayShurutiClick()">
+                <div class="card h-100">
+                  <div class="card-body text-center">
+                    <span class="topics-icon vc"></span>
+                    <h5 class="card-title mb-0">Nyaay Shuruti</h5>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 topics mb-4">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header p-0" style="text-align: center;">
+                <h4>Investigation Tools</h4>
+              </div>
+              <div class="card-body">
+                <div class="row row-cols-1 row-cols-lg-4 row-cols-sm-2 g-4">
+                  <a href="javascript:void(0)" routerLink="/icjs-search" class="col">
+                    <div class="card h-100 d-flex ">
+                      <div class="card-body text-center">
+                        <span class="topics-icon fsl-report"></span>
+                        <h5 class="card-title mb-0">ICJS Search</h5>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="javascript:void(0)" routerLink="/chitrakhozi" class="col">
+                    <div class="card h-100">
+                      <div class="card-body text-center">
+                        <span class="topics-icon chitrakhoji"></span>
+                        <h5 class="card-title mb-0">Chitrakhoji</h5>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="javascript:void(0)"  class="col">
+                    <div class="card h-100">
+                      <div class="card-body text-center">
+                        <span class="topics-icon summons"></span>
+                        <h5 class="card-title mb-0">Summons</h5>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="javascript:void(0)" routerLink="/court-case-search" class="col">
+                    <div class="card h-100">
+                      <div class="card-body text-center">
+                        <span class="topics-icon pre-trail"></span>
+                        <h5 class="card-title mb-0">Court Cases</h5>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- eSakshya Grid container -->
+    <div class="row" *ngIf="showEsakshyaGrid" #gridContainer>
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Sakshya Data</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div *ngIf="errorMessage" class="alert alert-danger m-0 ms-3" style="flex-grow: 1; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                {{ errorMessage }}
+              </div>
+              <input type="text" class="form-control w-25 ms-auto" placeholder="Search..." (input)="onQuickFilterESakshya($event)" style="max-width: 250px;">
+            </div>
+            <p-table [value]="EsakshyaFilterData" [paginator]="true" [rows]="20" [resizableColumns]="true" class="p-datatable-gridlines">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th> S No. </th>
+                  <th> SID </th>
+                  <th> SID Info </th>
+                  <th> PS Code </th>
+                  <th> Date </th>
+                  <th> Freezing Time </th>
+                  <th> Mobile No. </th>
+                </tr>
+              </ng-template>
+            
+              <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                <tr>
+                  <td>{{ rowIndex + 1 }}</td>
+                  <td>{{ rowData.sid }}</td>
+                  <td>{{ rowData.caseType ? (rowData.caseType + ' - ' + rowData.rno) : ('None - ' + rowData.rno) }}</td>
+                  <td>{{ rowData.psCode }}</td>
+                  <td>{{ rowData.sidDate | date: 'shortDate' }}</td>
+                  <td>{{ rowData.sidFreezingTime | date: 'shortTime' }}</td>
+                  <td>{{ rowData.mobileNo }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AG Grid Container for Nyaay Shuruti -->
+    <div class="row" *ngIf="showNyaayShurutiGrid" #gridContainer>
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Video Conference</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <input type="text" class="form-control w-25" placeholder="Search..." (input)="onQuickFilterNyaayShurut($event)" style="max-width: 250px; margin-left: 83%;">
+            </div>
+            <p-table [value]="nyaayShurutiRowData" [paginator]="true" [rows]="20" [resizableColumns]="true" class="p-datatable-gridlines">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th> S NO. </th>
+                  <th> TITLE </th>
+                  <th> CAUSE DATE </th>
+                  <th> VC DATE </th>
+                  <th> START TIME </th>
+                  <th> END TIME </th>
+                  <th> VC PIN </th>
+                  <th> FIR NUMBER </th>
+                  <th> CASE NUMBER </th>
+                  <th> CNR </th>
+                  <th> ACTION </th>
+                </tr>
+              </ng-template>
+            
+              <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                <tr>
+                  <td>{{ rowIndex + 1 }}</td>
+                  <td>{{ rowData.title }}</td>
+                  <td>{{ rowData.causedate ? rowData.causedate.replace('00:00:00', '').trim() : '' }}</td>
+                  <td>{{ rowData.vcdate ? rowData.vcdate.replace('00:00:00', '').trim() : '' }}</td>
+                  <td>{{ rowData.starttime }}</td>
+                  <td>{{ rowData.endtime }}</td>
+                  <td>{{ rowData.vcsubpin }}</td>
+                  <td>{{ rowData.firno }}</td>
+                  <td>{{ rowData.caseno }}</td>
+                  <td>{{ rowData.cnrno }}</td>
+                  <td>
+                    <a target="_blank" [href]="rowData.vcsuburl" class="btn btn-blue text-white">
+                      <i class="fa fa-eye mr-2" aria-hidden="true"></i> Launch VC
+                    </a>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

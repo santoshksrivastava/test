@@ -1,0 +1,167 @@
+
+  <div class="pc-container">
+    <div class="pcoded-content pb" style="padding-bottom:90px;">
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="page-header-title">
+                <h5 class="m-b-10">FSL Reports Received</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Search Form -->
+      <div class="row">
+        <div class="col-sm-12 px-0">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Search Criteria</h5>
+              <form #dateForm="ngForm">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="fromDate">Case Submitted From Date <sup class="text-danger top-0">*</sup> </label>
+                      <input type="date" class="form-control" id="fromDate" [(ngModel)]="fromDate" name="fromDate" required #fromDateInput="ngModel" />
+                      <div *ngIf="fromDateInput.invalid && fromDateInput.touched" class="text-danger">From Date is required.</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="toDate">Case Submitted To Date <sup class="text-danger top-0">*</sup> </label>
+                      <input type="date" class="form-control" id="toDate" [(ngModel)]="toDate" name="toDate" required #toDateInput="ngModel" />
+                      <div *ngIf="toDateInput.invalid && toDateInput.touched" class="text-danger">To Date is required.</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 pt-4 mt-1">
+                    <button type="button" class="btn btn-success mr-2" (click)="onSearch()" [disabled]="!dateForm.valid">Search</button>
+                    <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Results: Cards and Table -->
+      <div *ngIf="showResults">
+        <!-- Cards -->
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="card text-center" style="font-size: 1.75rem;">
+              <div class="card-body">
+                <h6 class="card-title text-primary" style="font-size: 2rem;">Total</h6>
+                <h3 class="text-info" style="font-size: 1.7rem;">{{Total}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card text-center" style="font-size: 1.75rem;">
+              <div class="card-body">
+                <h6 class="card-title text-primary" style="font-size: 2rem;">Reports Generated</h6>
+                <h3 class="text-warning" style="font-size: 1.7rem;">{{ReportsGenerated}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card text-center" style="font-size: 1.75rem;">
+              <div class="card-body">
+                <h6 class="card-title text-primary" style="font-size: 2rem;">Reports Not Generated</h6>
+                <h3 class="text-success" style="font-size: 1.7rem;">{{ReportsNotGenerated}}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row mt-12">
+          <div class="col-md-12">
+            <div class="card" style="font-size: 1.75rem;">
+              <div class="card-body">
+  
+              <!-- Table -->
+                  <div style="height: 100%; width: 100%;">
+                    <div class="row mb-1">
+                      <div class="col-md-6 offset-md-6 d-flex justify-content-end mb-3">
+                        <input type="text" class="form-control" placeholder="Search..." (input)="onQuickFilter($event)" style="max-width: 300px;" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <p-table 
+                          [columns]="columns" 
+                          [value]="FSLData" 
+                          [paginator]="true" 
+                          [rows]="10" 
+                          [lazy]="true" 
+                          (onLazyLoad)="loadFslReports($event)" 
+                          [totalRecords]="FilteredRecordsCount" 
+                          [loading]="loading" 
+                          [rowsPerPageOptions]="[10, 20, 50]"
+                          [paginatorTemplate]="true"
+                          [responsive]="true"
+                          [rowHover]="true"  
+                        >
+                          <!-- Table Header -->
+                          <ng-template pTemplate="header" let-columns>
+                            <tr>
+                              <th *ngFor="let col of columns" class="header-style"> <!-- Sortable Header -->
+                                {{ col.header }}
+                              </th>
+                            </tr>
+                          </ng-template>
+  
+                          <!-- Table Body -->
+                          <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr *ngIf="FSLData.length > 0; else noRecords">
+                              <td *ngFor="let col of columns" class="body-cell-style"> <!-- Improved Cell Style -->
+                                <!-- Add click event to 'fulldispno' column -->
+                                <span *ngIf="col.field === 'fulldispno'; else defaultColumn">
+                                  <a href="javascript:void(0)" (click)="openModalWithDispNo(content, rowData[col.field])">
+                                    {{ rowData[col.field] }}
+                                  </a>
+                                </span>
+                                <ng-template #defaultColumn>
+                                  {{ rowData[col.field] }}
+                                </ng-template>
+                              </td>
+                            </tr>
+                          </ng-template>
+  
+                          <!-- No Records Template -->
+                          <ng-template #noRecords>
+                            <tr>
+                              <!-- Centered "No records found" message with colspan -->
+                              <td [attr.colspan]="columns.length" class="text-center text-muted p-3"> <!-- Improved Message Style -->
+                                No records found
+                              </td>
+                            </tr>
+                          </ng-template>
+  
+                          <!-- Paginator Left Template -->
+                          <ng-template pTemplate="paginatorleft">
+                            <div>
+                              Showing {{ currentFirst }} to {{ currentLast }} of {{ FilteredRecordsCount }} records
+                            </div>
+                          </ng-template>
+                        </p-table>
+  
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  
+  <div #dynamicContainer></div>
+
+

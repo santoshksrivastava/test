@@ -1,0 +1,86 @@
+<div class="pc-container">
+    <div class="pcoded-content pb" style="padding-bottom:90px;">
+         <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10" >Pillar dashboard Report </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+           <div class="card mt-5">
+                <div class="card-body">
+                      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div id="searchByFilingNumber" class="row searchbypanel">
+                        
+                        
+                        <div class="col-md-3  col-12 mb-3">
+                         <label class="form-label">From Date</label>
+                        <sup class="text-danger top-0">*</sup>
+                        <input type="date" id="bdpFromDate"  class="form-control" formControlName="FromDate" maxlength="7" tabindex="2" >    
+                        </div>
+                        <div class="col-md-3 col-12 mb-3">
+                            <label class="form-label">To Date</label>
+                        <sup class="text-danger top-0">*</sup>
+                        <input type="date" id="bdpToDate"     class="form-control" formControlName="ToDate" maxlength="7" tabindex="2">
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-12 col-12 mb-3 pt-4 mt-1" style="text-align: right;">
+                            <button type="submit" class="btn btn-success text-white py-1">Search</button>
+                        </div>
+                 </form>
+                </div>
+              </div>
+               <div class="ag-theme-alpine" style="height: 100%; width: 100%;">
+                    <div>
+                      <div class="card mt-5">
+                            <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="card-title text-center md-text text-primary" style="font-size: 24px;"> Pillar Dashboard Report</label>
+                                            <p-table 
+                                            [value]="PillarData" 
+                                            [paginator]="true" [rows]="50" 
+                                            responsiveLayout="scroll">
+                                                <ng-template pTemplate="header">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Police Station</th>
+                                                        <th>Prosecution Count</th>
+                                                        <th>FSL Count</th>
+                                                        <th>MLC COUNT</th>
+                                                        <th>PMR COUNT</th>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="body" let-case let-rowIndex="rowIndex">
+                                                    <tr>
+                                                        <td>{{ rowIndex + 1 }}</td>
+                                                        <td>{{ case.PS }}</td>
+                                                        <td>{{ case.Prosecution_Count}}</td>
+                                                        <td>{{ case.FSL_Count }}</td>
+                                                        <td>{{ case.MLC_COUNT }}</td> 
+                                                        <td>{{ case.PMR_COUNT }}</td>  
+                                                    </tr>
+                                                </ng-template>
+                                                 <ng-template pTemplate="footer">
+                                                    <tr style="font-weight: bold; border-top: 2px solid #000;">
+                                                        <td colspan="2" style="border: 1px solid #000; padding: 8px; background-color: #f1f1f1;">Total</td>
+                                                        <td style="border: 1px solid #000; padding: 8px; background-color: #f1f1f1;">{{ getTotal('Prosecution_Count') }}</td>
+                                                        <td style="border: 1px solid #000; padding: 8px; background-color: #f1f1f1;">{{ getTotal('FSL_Count') }}</td>
+                                                        <td style="border: 1px solid #000; padding: 8px; background-color: #f1f1f1;">{{ getTotal('MLC_COUNT') }}</td>
+                                                        <td style="border: 1px solid #000; padding: 8px; background-color: #f1f1f1;">{{ getTotal('PMR_COUNT') }}</td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+                                    </div>
+                                </div>
+                       </div>
+                   </div>
+              </div>
+   </div>
+</div>

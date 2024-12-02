@@ -1,0 +1,499 @@
+<div class="pc-container">
+    <div class="pcoded-content pb" style="padding-bottom:90px;">
+              <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10" >Total FIR</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+               </div>
+              <div class="card">
+                <div class="card-body">
+                      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div id="searchByFilingNumber" class="row searchbypanel">
+                        <div class="col-md-3  col-12 mb-3">
+                            <label class="form-label"> Police Station</label>
+                            <sup class="text-danger top-0">*</sup>
+                          <select id="policeStation" formControlName="psCode" data-errormessage-custom-error="" class="form-control form-select" [ngClass]="{ 'is-invalid': isSubmitted && f['psCode'].errors }" >
+                                <option value="">Select All</option>
+                                <option *ngFor="let policestation of policestations" [value]="policestation.value">{{ policestation.text }}</option>
+                            </select>
+                        
+                          @if (f['psCode'].errors && isSubmitted) {
+                                <div class="invalid-feedback">
+                                  @if (f['psCode'].errors['required']) {
+                                    <div>Police Station is required</div>
+                                  }
+                                </div>
+                                }
+                        </div>
+                        
+                        <div class="col-md-3  col-12 mb-3">
+                         <label class="form-label">From Date</label>
+                        <sup class="text-danger top-0">*</sup>
+                        <input type="date" id="bdpFromDate"  class="form-control" formControlName="FromDate" maxlength="7" tabindex="2" >    
+                        </div>
+                        <div class="col-md-3 col-12 mb-3">
+                            <label class="form-label">To Date</label>
+                        <sup class="text-danger top-0">*</sup>
+                        <input type="date" id="bdpToDate"     class="form-control" formControlName="ToDate" maxlength="7" tabindex="2">
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-12 col-12 mb-3 pt-4 mt-1" style="text-align: right;">
+                            <button type="submit" class="btn btn-success text-white py-1">Search</button>
+                        </div>
+                 </form>
+                </div>
+              </div>
+              <div class="card mt-5">
+                <div class="card-body">
+                <div class="card-view row justify-content-around">
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <h5 class="card-title text-center md-text text-primary" style="font-size: 24px;">Total Arrests</h5>
+                          <a href="javascript:void(0)" class="card-text text-center md-text text-primary alldata" style="font-size: 20px;" id="listedThisWeek" data-type="nextsevendays" 
+                           (click)="GetTotalListFIR($event, 'ongoing')">0</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <h5 class="card-title text-center md-text text-primary" style="font-size: 24px;">Arrests (FIR)</h5>
+                             <a href="javascript:void(0)" class="card-text text-center md-text text-primary alldata" style="font-size: 20px;" id="totalOnGoing" data-type="ongoing" 
+                          (click)="totalAccusedFIR($event, 'ongoing')">0</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <h5 class="card-title text-center md-text text-primary" style="font-size: 24px;">Arrests (Petty Crimes)</h5>
+                         <a href="javascript:void(0)" class="card-text text-center md-text text-primary alldata" style="font-size: 20px;" id="listedToday" data-type="today" 
+                           (click)="totalDetails($event, 'ongoing')" >0</a>
+
+
+                        </div>
+                    </div>
+                </div>
+               </div>
+              </div>
+               </div>
+
+
+
+ 
+               <div class="ag-theme-alpine" style="height: 100%; width: 100%;">
+                    <div *ngIf="isAccusedPettyCrimeListTable">
+                      <div class="card mt-5">
+                <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                  <label class="card-title text-center md-text text-primary" style="font-size: 24px;"> Arrests (Petty Crimes)</label>
+                                  
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input type="text" class="form-control w-25" placeholder="Search..." (input)="onQuickFilterNyaayShurut($event)" style="max-width: 250px; margin-left: 83%;">
+                                </div>
+                                <p-table 
+                                [value]="DetailsAccusedPettyCrimeDataFilter" 
+                                [paginator]="true" [rows]="10" 
+                                 responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Police Station</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                             <th>Gender</th>
+                                             <th>Relative Name </th>
+                                             <th>Arrest Date  </th>
+                                              <th>Address</th>
+                                         		  <th>PHOTO</th>		
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-case let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ rowIndex + 1 }}</td>
+                                            <td>{{ case.POLICE_STATION }}</td>
+                                            <td>{{ case.NAME }}</td>
+                                             <td>{{ case.AGE }}</td>
+                                              <td>{{ case.GENDER }}</td>
+                                              <td>{{ case.RELATIVE_NAME }}</td>
+                                               <td>{{ case.ARREST_DATE }}</td>
+                                              <td>{{ case.ACCUSED_ADDRESS }}</td>
+                                              <td>
+                                                <img
+                                                    *ngIf="case.PHOTO"
+                                                    [src]="'data:image/jpeg;base64,' + case.PHOTO"
+                                                    alt="PHOTO"
+                                                    style="width: 50px; height: 50px;"
+                                                />
+                                             </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+  </div>
+                </div>
+
+                <div class="ag-theme-alpine" style="height: 100%; width: 100%;">
+                    <div *ngIf="isAccusedFIRListTable">
+                       <div class="card mt-5">
+                <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                  <label class="card-title text-center md-text text-primary" style="font-size: 24px;"> Arrests (FIR)</label>
+                                  <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input type="text" class="form-control w-25" placeholder="Search..." (input)="onQuickFilterNyaayShurutAccused($event)" style="max-width: 250px; margin-left: 83%;">
+                                </div>
+                                <p-table [value]="DetailsAccusedPettyCrimeDataFilterAccusedFIR" [paginator]="true" [rows]="10"  responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Police Station</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                             <th>Gender</th>
+                                             <th>Relative Name </th>
+                                              <th>Arrest Date  </th>
+                                              <th>Address</th>
+                                             <th>PHOTO</th>		
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-case let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ rowIndex + 1 }}</td>
+                                            <td>{{ case.POLICE_STATION }}</td>
+                                            <td>{{ case.NAME }}</td>
+                                             <td>{{ case.AGE }}</td>
+                                              <td>{{ case.GENDER }}</td>
+                                              <td>{{ case.RELATIVE_NAME }}</td>
+                                               <td>{{ case.ARREST_DATE }}</td>
+                                               <td>{{ case.ACCUSED_ADDRESS }}</td>
+                                               <td>
+                                                <img
+                                                    *ngIf="case.PHOTO"
+                                                    [src]="'data:image/jpeg;base64,' + case.PHOTO"
+                                                    alt="PHOTO"
+                                                    style="width: 50px; height: 50px;"
+                                                />
+                                             </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+      </div>
+
+ <div class="ag-theme-alpine" style="height: 100%; width: 100%;">
+                    <div *ngIf="isTotalListTable">
+                       <div class="card mt-5">
+                <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                  <label class="card-title text-center md-text text-primary" style="font-size: 24px;"> Total Arrests</label>
+                                  <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input type="text" class="form-control w-25" placeholder="Search..." (input)="onQuickFilterNyaayShurutTotal($event)" style="max-width: 250px; margin-left: 83%;">
+                                </div>
+                                <p-table [value]="DetailsAccusedPettyCrimeDataFilterTotalFIR" [paginator]="true" [rows]="10"  responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Police Station</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                             <th>Gender</th>
+                                             <th>Relative Name </th>
+                                              <th>Arrest Date  </th>
+                                              <th>Address</th>
+                                             <th>PHOTO</th>		
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-case let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ rowIndex + 1 }}</td>
+                                            <td>{{ case.POLICE_STATION }}</td>
+                                            <td>{{ case.NAME }}</td>
+                                             <td>{{ case.AGE }}</td>
+                                              <td>{{ case.GENDER }}</td>
+                                              <td>{{ case.RELATIVE_NAME }}</td>
+                                              <td>{{ case.ARREST_DATE }}</td>
+                                               <td>{{ case.ACCUSED_ADDRESS }}</td>
+                                               <td>
+                                                <img
+                                                    *ngIf="case.PHOTO"
+                                                    [src]="'data:image/jpeg;base64,' + case.PHOTO"
+                                                    alt="PHOTO"
+                                                    style="width: 50px; height: 50px;"
+                                                />
+                                             </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+      </div>
+
+
+<div *ngIf="BackPage" class="row">
+          <div class="col-sm-12 fld">
+             <div class="card">
+               <div class="card-body pb-0 pt-3">
+                 <div  class="row">
+                                        <div  class="col-md-12 col-lg-6 col-xl-6">
+                                            <p>
+                                                <label class="cus-labels-name" style="font-size: 20px; font-weight: 600;">{{ lbltype }}</label>
+                                            
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12 col-lg-6 col-xl-6" style="text-align: right;">
+                                        
+                                    
+                                    <img src="assets/images/go-back-icon.png" alt="Nyaay Setu"  width="230px"  height="35px" (click)="lnkbackClick()">
+                                    
+                                        </div>
+                                        
+                                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+                </div>
+      <div class="ag-theme-alpine" style="height: 100%; width: 100%;">
+                    <div *ngIf="isTotalListTableBYSP">
+                       <div class="card mt-5">
+                <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p-table [value]="DetailsAccusedByPSData" [paginator]="true" [rows]="10"  responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Police Station</th>
+                                            <th>Arrests Fir</th>
+                                            <th>Arrests Petty Crimes</th>
+                                             <th>Total Arrests</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-case let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ rowIndex + 1 }}</td>
+                                            <td>{{ case.PoliceStation }}</td>
+                                            
+                                            <td>
+                                                <a href="javascript:void(0);"  (click)="totalDetailsWithSPCode($event, case.PS_ID,'ArrestsFir')" >{{ case.ArrestsFir }}</a>
+                                            </td>
+                                              <td>
+                                                <a href="javascript:void(0);"  (click)="totalDetailsWithSPCode($event, case.PS_ID,'ArrestsPettyCrimes')">{{ case.ArrestsPettyCrimes }}</a>
+                                            </td>
+                                           <td>
+                                                <a href="javascript:void(0);"  (click)="totalDetailsWithSPCode($event, case.PS_ID,'TotalArrests')">{{ case.TotalArrests }}</a>
+                                            </td>
+                                               
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+      </div>
+
+      <div class="ag-theme-alpine" style="height: 100%; width: 100%;">
+                    <div *ngIf="isAccusedFIRListTableSp">
+                       <div class="card mt-5">
+                <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                  <label class="card-title text-center md-text text-primary" style="font-size: 24px;"> Arrests (FIR)</label>
+                                  <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input type="text" class="form-control w-25" placeholder="Search..." (input)="onQuickFilterArrestsFirSearch($event)" style="max-width: 250px; margin-left: 83%;">
+                                </div>
+                                <p-table [value]="DetailsAccusedAccusedFIRSerach" [paginator]="true" [rows]="10"  responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Police Station</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                             <th>Gender</th>
+                                             <th>Relative Name </th>
+                                              <th>Arrest Date  </th>
+                                              <th>Address</th>
+                                             <th>PHOTO</th>		
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-case let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ rowIndex + 1 }}</td>
+                                            <td>{{ case.POLICE_STATION }}</td>
+                                            <td>{{ case.NAME }}</td>
+                                             <td>{{ case.AGE }}</td>
+                                              <td>{{ case.GENDER }}</td>
+                                              <td>{{ case.RELATIVE_NAME }}</td>
+                                               <td>{{ case.ARREST_DATE }}</td>
+                                               <td>{{ case.ACCUSED_ADDRESS }}</td>
+                                               <td>
+                                                <img
+                                                    *ngIf="case.PHOTO"
+                                                    [src]="'data:image/jpeg;base64,' + case.PHOTO"
+                                                    alt="PHOTO"
+                                                    style="width: 50px; height: 50px;"
+                                                />
+                                             </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+      </div>
+        <div class="ag-theme-alpine" style="height: 100%; width: 100%;">
+                    <div *ngIf="isAccusedPettyCrimeBySPInnerSPTable">
+                      <div class="card mt-5">
+                <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                  <label class="card-title text-center md-text text-primary" style="font-size: 24px;"> Arrests (Petty Crimes)</label>
+                                  
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input type="text" class="form-control w-25" placeholder="Search..." (input)="onQuickFilterArrestspettySearch($event)" style="max-width: 250px; margin-left: 83%;">
+                                </div>
+                                <p-table 
+                                [value]="DetailsAccusedPettyCrimeBySPInnerSearch" 
+                                [paginator]="true" [rows]="10" 
+                                 responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>S.No22</th>
+                                            <th>Police Station</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                             <th>Gender</th>
+                                             <th>Relative Name </th>
+                                             <th>Arrest Date  </th>
+                                              <th>Address</th>
+                                         		  <th>PHOTO</th>		
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-case let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ rowIndex + 1 }}</td>
+                                            <td>{{ case.POLICE_STATION }}</td>
+                                            <td>{{ case.NAME }}</td>
+                                             <td>{{ case.AGE }}</td>
+                                              <td>{{ case.GENDER }}</td>
+                                              <td>{{ case.RELATIVE_NAME }}</td>
+                                               <td>{{ case.ARREST_DATE }}</td>
+                                              <td>{{ case.ACCUSED_ADDRESS }}</td>
+                                              <td>
+                                                <img
+                                                    *ngIf="case.PHOTO"
+                                                    [src]="'data:image/jpeg;base64,' + case.PHOTO"
+                                                    alt="PHOTO"
+                                                    style="width: 50px; height: 50px;"
+                                                />
+                                             </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+  </div>
+                </div>
+<div class="ag-theme-alpine" style="height: 100%; width: 100%;">
+                    <div *ngIf="isTotalListByspInnerTable">
+                       <div class="card mt-5">
+                <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                  <label class="card-title text-center md-text text-primary" style="font-size: 24px;"> Total Arrests</label>
+                                  <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input type="text" class="form-control w-25" placeholder="Search..." (input)="onQuickFilterNyaayShurutTotal($event)" style="max-width: 250px; margin-left: 83%;">
+                                </div>
+                                <p-table [value]="TotalDetailDataByspInner" [paginator]="true" [rows]="10"  responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Police Station</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                             <th>Gender</th>
+                                             <th>Relative Name </th>
+                                              <th>Arrest Date  </th>
+                                              <th>Address</th>
+                                             <th>PHOTO</th>		
+
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-case let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td>{{ rowIndex + 1 }}</td>
+                                            <td>{{ case.POLICE_STATION }}</td>
+                                            <td>{{ case.NAME }}</td>
+                                             <td>{{ case.AGE }}</td>
+                                              <td>{{ case.GENDER }}</td>
+                                              <td>{{ case.RELATIVE_NAME }}</td>
+                                              <td>{{ case.ARREST_DATE }}</td>
+                                               <td>{{ case.ACCUSED_ADDRESS }}</td>
+                                               <td>
+                                                <img
+                                                    *ngIf="case.PHOTO"
+                                                    [src]="'data:image/jpeg;base64,' + case.PHOTO"
+                                                    alt="PHOTO"
+                                                    style="width: 50px; height: 50px;"
+                                                />
+                                             </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+      </div>
+                </div>
+</div>
+ 
+
+       
+  
+  

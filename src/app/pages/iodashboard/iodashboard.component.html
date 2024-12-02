@@ -1,0 +1,176 @@
+<div class="pc-container">
+  <div class="pcoded-content pb" style="padding-bottom:90px;">
+    <div class="welcome-user"><h2 >Welcome User</h2></div>
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Dashboard </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row fir-tot">
+      <div class="col-lg-3">
+        <a href="javascript:void(0)" class="card text-center p-4 com-border-shadow">
+          <h4>Less than 7 days</h4>
+          <span>10</span>
+        </a>
+      
+      </div>
+      <div class="col-lg-3">
+        <a href="javascript:void(0)" class="card text-center p-4 com-border-shadow">
+          <h4>07 to 15 days</h4>
+          <span>01</span>
+        </a>
+      
+      </div>
+      <div class="col-lg-3">
+        <a href="javascript:void(0)" class="card text-center p-4 com-border-shadow">
+          <h4>15 to 21 days</h4>
+          <span>20</span>
+        </a>
+      
+      </div>
+      <div class="col-lg-3">
+        <a href="javascript:void(0)" class="card text-center p-4 com-border-shadow">
+          <h4>21 to 31 days</h4>
+          <span>25</span>
+        </a>
+      
+      </div>
+
+    </div>
+
+    <div class="row">
+                <div class="card mt-5">
+                <div class="card-body">
+                      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div id="searchByFilingNumber" class="row searchbypanel">
+                          <div class="col-md-3  col-12 mb-3">
+                            <label class="form-label"> District  Name</label>
+                            <ng-multiselect-dropdown
+                              #multiSelect
+                              [settings]="settings"
+                              [data]="ListDistict"
+                              formControlName="districtCodes"
+                              [placeholder]="'Select District'"
+                              (onDropDownClose)="onDistrictDropdownChange($event)"
+                            >
+                            </ng-multiselect-dropdown>
+
+                          </div>
+
+                     
+                        <div class="col-md-3  col-12 mb-3">
+                            <label class="form-label"> Police Station</label>
+                            <sup class="text-danger top-0">*</sup>
+                            <ng-multiselect-dropdown
+                            #multiSelect
+                            [settings]="settings"
+                            [data]="policestations"
+                            formControlName="psCode"
+                            [placeholder]="'Police Station'"
+                            
+                          >
+                          </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3  col-12 mb-3">
+                         <label class="form-label">From Date</label>
+                        <sup class="text-danger top-0">*</sup>
+                         <p-calendar [(ngModel)]="dateValue" formControlName="FromDate"  
+                       [minDate]="minDateValue" 
+                       class="form-control" 
+                        [maxDate]="maxDateValue" readonlyInput="true" 
+                        placeholder="Select a date" (onSelect)="onDateChange($event)" dateFormat="dd/mm/yy"></p-calendar>
+   
+                        </div>
+                        <div class="col-md-3 col-12 mb-3">
+                            <label class="form-label">To Date</label>
+                        <sup class="text-danger top-0">*</sup>
+                        <p-calendar   class="form-control" formControlName="ToDate"  [minDate]="minDateValue2"  [maxDate]="maxDateValue2" placeholder="Select a date" dateFormat="dd/mm/yy" ></p-calendar>
+
+                        </div>
+                    </div>
+                     <div class="col-md-12 col-12 mb-3 pt-4 mt-1" style="text-align: right;">
+                            <button type="submit" class="btn btn-success text-white py-1" (click)="onSearch()">Search</button>
+                        </div>
+                      </form>
+                </div>
+              </div>
+
+
+      <div class="col-sm-12 mb-1 fir-det-sec">
+          <div class="row">
+            <div class="col-sm-4">
+              <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr" (click)="GetTotalCount($event,TotalType)"  data-type="TotalCount">
+                <h4>Total  Pending FIR</h4>
+                  <span  id="TotalCount" > 0 </span>
+              </a>
+            </div>
+            <div class="col-sm-4">
+              <a href="javascript:void(0)" class="card text-center p-4 com-blu-clr" (click)="GetTotalCount($event,HeinousType)"  data-type="HeinousNo">
+                <h4>Heinous No</h4>
+                <span id="HeinousNo"> 0</span>
+              </a>
+            
+            </div>
+          <div class="col-sm-4">
+            <a href="javascript:void(0)"class="card text-center p-4 com-grn-clr" (click)="GetTotalCount($event,OtherType)" data-type="HeinousYes">
+              <h4>Heinous Yes</h4>
+              <span id="HeinousYes">0</span>
+            </a>
+
+          </div>
+
+          </div>
+<div class="row" *ngIf="isTotaldetails">
+  <div id="container"></div>
+  <!--<div class="col-sm-4">
+    <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr"  data-type="TotalCount">
+      <h4> {{lablename0}}</h4>
+        <span> {{Cnt0}} </span>
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr"  data-type="TotalCount">
+      <h4> {{lablename1}}</h4>
+        <span> {{Cnt1}} </span>
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr"  data-type="TotalCount">
+      <h4> {{lablename2}}</h4>
+        <span> {{Cnt2}} </span>
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr"  data-type="TotalCount">
+      <h4> {{lablename3}}</h4>
+        <span> {{Cnt3}} </span>
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr"  data-type="TotalCount">
+      <h4> {{lablename4}}</h4>
+        <span> {{Cnt4}} </span>
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <a  href="javascript:void(0)"   class="card text-center p-4 com-red-clr"  data-type="TotalCount">
+      <h4> {{lablename5}}</h4>
+        <span> {{Cnt5}} </span>
+    </a>
+  </div>-->
+</div>
+      </div>
+     
+   
+    </div>
+
+  </div>
+</div>

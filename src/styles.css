@@ -1,0 +1,14 @@
+.custom-success-alert {
+    background-color: #006400 !important; /* Dark green background */
+    color: #ffffff !important; /* White text */
+  }
+  
+  .custom-failure-alert {
+    background-color: #ff0000 !important; /* Red background */
+    color: #ffffff !important; /* White text */
+  }
+  
+  .custom-title {
+    font-size: 14px !important; /* Small font size */
+    color: #ffffff !important; /* White text */
+  }
